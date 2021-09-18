@@ -15,8 +15,12 @@ namespace Esercizi.Model.Data
         {
             Corso c = new Corso(345, "Matematica", 50, ExperienceLevel.PRINCIPIANTE, "molto bello", 19.99m);
             EdizioneCorso e = new EdizioneCorso(1, c, new LocalDate(2021,9,20), new LocalDate(2021, 9, 30), 12, 100);
+            EdizioneCorso h = new EdizioneCorso(2, c, new LocalDate(2021, 9, 20), new LocalDate(2021, 9, 30), 12, 50);
+            EdizioneCorso r = new EdizioneCorso(3, c, new LocalDate(2021, 9, 20), new LocalDate(2021, 9, 30), 12, 50);
             courses.Add(c);
             courseEditions.Add(e);
+            courseEditions.Add(h);
+            courseEditions.Add(r);
         }
 
         public Corso AddCourse(Corso c)
@@ -31,6 +35,13 @@ namespace Esercizi.Model.Data
         }
         public EdizioneCorso AddEdition(EdizioneCorso e)
         {
+            foreach (var s in courseEditions)
+            {
+                if (s.Id == e.Id)
+                {
+                    return null;
+                }
+            }
             courseEditions.Add(e);
             return e;
         }

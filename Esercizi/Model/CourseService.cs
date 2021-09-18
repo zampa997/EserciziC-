@@ -35,6 +35,10 @@ namespace Esercizi.Model
                 return null;
             }
             e.Corso = found;
+            if (Repository.AddEdition(e) == null)
+            {
+                return null;
+            }
             Repository.AddEdition(e);
             return e;
         }
@@ -51,7 +55,23 @@ namespace Esercizi.Model
             report.SumPrices = editions.Sum(e => e.RealPrice);
             report.AveragePrice = report.SumPrices/report.NumEditions;
             report.MedianPrice = CalculateMedianPrice(editions);
-            //report.ModaPrice => usa Dictionary!
+            report.ModaPrice = CalculateModa(editions);
+            report.NumeroMaxStudents = (int)editions.Max(e => e.RealPrice);
+            report.NumeroMinStudents = (int)editions.Min(e => e.RealPrice);
+            return report;
+        }
+
+        private decimal CalculateModa(IEnumerable<EdizioneCorso> editions)
+        {
+            int count = 0;
+            List<decimal> EditionsInDictionary = new List<decimal>();
+            foreach (var element in editions)
+            {
+                EditionsInDictionary.Add(element.RealPrice);
+            }
+            decimal[] modeArray = EditionsInDictionary.ToArray();
+            var mode = modeArray.GroupBy(n => n).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault();
+            return mode;
         }
 
         private decimal CalculateMedianPrice(IEnumerable<EdizioneCorso> editions)

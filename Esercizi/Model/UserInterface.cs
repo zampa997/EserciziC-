@@ -11,7 +11,7 @@ namespace Esercizi.Model
     {
         public CourseService CourseService { get; set; }
         const string DIVISORE = "==============================================================";
-        const string MAIN_MENU = "Operazioni disponibili: inserisci\na per vedere tutti i corsi\nc per aggiungere un corso\ne per cercare le edizioni di un corso\nb per inserire un edizione di un corso\nq per terminare il programma";
+        const string MAIN_MENU = "Operazioni disponibili: inserisci\na per vedere tutti i corsi\nc per aggiungere un corso\ne per cercare le edizioni di un corso\nb per inserire un edizione di un corso\nr per creare un report\nq per terminare il programma";
         const string BASE_PROMPT = "=>";
 
         public UserInterface(CourseService service)
@@ -42,7 +42,9 @@ namespace Esercizi.Model
                     case 'b':
                         CreateCourseEdition();
                         break;
-
+                    case 'r':
+                        GenerateReport();
+                        break;
                     case 'e':
                         ShowCourseEditionsByCourse();
                         break;
@@ -57,6 +59,14 @@ namespace Esercizi.Model
             while (!quit);          
         }
 
+        private void GenerateReport()
+        {
+            long id = ReadLong("Inserire Id corso per generare un report =>");
+            Report r = CourseService.GenerateStatisticalReport(id);
+            WriteLine(DIVISORE);
+            WriteLine($"Numero edizioni: {r.NumEditions} \nSomma dei prezzi: {r.SumPrices} \nMedia dei prezzi: {r.AveragePrice} \nMediana dei prezzi: {r.MedianPrice} \nModa dei prezzi: {r.ModaPrice} \nNumero massimo studenti: {r.NumeroMaxStudents} \nNumero minimo studenti: {r.NumeroMinStudents}");
+        }
+
         private void CreateCourseEdition()
         {
             long id = ReadLong("Inserire Id edizione corso =>");
@@ -66,9 +76,17 @@ namespace Esercizi.Model
             int numStudents = (int)ReadLong("Inserire numero studenti =>");
             decimal realPrice = ReadDecimal("Inserire prezzo finale edizione corso =>");
             var edition = new EdizioneCorso(id, null, start, end, numStudents, realPrice);
-            CourseService.CreateCourseEdition(edition, idCorso);
-            Console.Clear();
-            WriteLine("Edizion inserita con successo");
+            if (CourseService.CreateCourseEdition(edition, idCorso) == null)
+            {
+                WriteLine(DIVISORE);
+                WriteLine("Impossibile aggiungere Edizioni con lo stesso ID");
+            }
+            else
+            {
+                CourseService.CreateCourseEdition(edition, idCorso);
+                Console.Clear();
+                WriteLine("Edizione inserita con successo");
+            }          
         }
 
         private void ShowCourseEditionsByCourse()
