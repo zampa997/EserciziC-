@@ -23,6 +23,8 @@ namespace Esercizi.Model
             StrandardPrice = strandardPrice;
         }
 
+        //override equal MA hashcode
+
         public override string ToString()
         {
             return $"Id:{Id} | Titolo:{Titolo} | Livello:{EntryLevel}";

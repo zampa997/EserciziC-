@@ -42,52 +42,74 @@ namespace Esercizi.Model
             Repository.AddEdition(e);
             return e;
         }
-        public Report GenerateStatisticalReport(long idCorso) //=> in un solo giro linq
+
+        public Report GenerateStatisticalReport(long id)
         {
-            Corso found = Repository.FindById(idCorso);
-            if (found == null)
+            Corso selectedCourse = Repository.FindById(id);
+            List<EdizioneCorso> editions = (List<EdizioneCorso>)Repository.FindEditionsByCourses(id);
+
+            
+            return editions.Aggregate(new Report(), (report, edition) =>
             {
-                return null;
-            }
-            IEnumerable <EdizioneCorso> editions = Repository.FindEditionsByCourses(idCorso);
-            //report.NumEditions = editions.Count();
-            //report.SumPrices = editions.Sum(e => e.RealPrice);
-            //report.AveragePrice = report.SumPrices/report.NumEditions;
-            //report.MedianPrice = CalculateMedianPrice(editions);
-            //report.ModaPrice = editions.GroupBy(g => g.RealPrice).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault();
-            ////e100 e50 e50 e25 //100(1) 50(2) 25(1) //50(2) 100(1) 25(1) // 50 100 25 // => 50
-            ////controllare se editions == null
-            //report.NumeroMaxStudents = editions.Max(e => e.NumStudents);
-            //report.NumeroMinStudents = editions.Min(e => e.NumStudents);
-            EdizioneCorso r = editions.Aggregate((a, b) => 
-            {
-                a.Report.NumEditions = editions.Count();
-                a.Report.SumPrices = editions.Sum(e => e.RealPrice);
-                a.Report.AveragePrice = a.Report.SumPrices/a.Report.NumEditions;
-                a.Report.MedianPrice = CalculateMedianPrice(editions);
-                a.Report.ModaPrice = editions.GroupBy(g => g.RealPrice).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault();
-                a.Report.NumeroMaxStudents = editions.Max(e => e.NumStudents);
-                a.Report.NumeroMinStudents = editions.Min(e => e.NumStudents);
-                return a;
+                report.prices.Add(edition.RealPrice);
+                report.NumEditions++; 
+                report.SumPrices += edition.RealPrice;
+                report.MedianPrice = report.SumPrices / report.NumEditions;
+                report.ModaPrice = editions.GroupBy(g => g.RealPrice).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault();
+                report.NumeroMaxStudents = edition.NumStudents < report.NumeroMinStudents ? edition.NumStudents : report.NumeroMinStudents;
+                report.NumeroMinStudents = edition.NumStudents > report.NumeroMaxStudents ? edition.NumStudents : report.NumeroMaxStudents;
+                return report;
             });
-            //List<int> nums = new List<int> { 1, 2, 3, 4, 5 };
-            //var result = nums.Aggregate((a, b) => a + b);
-            //var max = nums.Aggregate((a, b) => a > b? a: b);
-            //var r = editions.Aggregate(new EditionsData(), (a, e) =>
-            //{
-            //    a.NumElements++;
-            //    a.TotalPrice += e.RealPrice;
-            //    return a;
-            //});
-            //var avg1 = r.TotalPrice / r.NumElements;
-            //var avg2 = editions.Aggregate(new EditionsData(), (a, e) =>
-            //{
-            //    a.NumElements++;
-            //    a.TotalPrice += e.RealPrice;
-            //    return a;
-            //}, a => a.TotalPrice/a.NumElements);
-            return r.Report;
         }
+        //public Report GenerateStatisticalReport(long idCorso) //=> in un solo giro linq
+        //{
+        //    Report report = new Report();
+        //    Corso found = Repository.FindById(idCorso);
+        //    if (found == null)
+        //    {
+        //        return null;
+        //    }
+        //    IEnumerable<EdizioneCorso> editions = Repository.FindEditionsByCourses(idCorso);
+        //    report.NumEditions = editions.Count();
+        //    report.SumPrices = editions.Sum(e => e.RealPrice);
+        //    report.AveragePrice = report.SumPrices / report.NumEditions;
+        //    report.MedianPrice = CalculateMedianPrice(editions);
+        //    report.ModaPrice = editions.GroupBy(g => g.RealPrice).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault();
+        //    //e100 e50 e50 e25 //100(1) 50(2) 25(1) //50(2) 100(1) 25(1) // 50 100 25 // => 50
+        //    //controllare se editions == null
+        //    report.NumeroMaxStudents = editions.Max(e => e.NumStudents);
+        //    report.NumeroMinStudents = editions.Min(e => e.NumStudents);
+
+        //    EdizioneCorso r = editions.Aggregate((a, b) =>
+        //    {
+        //        a.Report.NumEditions = editions.Count();
+        //        a.Report.SumPrices = editions.Sum(e => e.RealPrice);
+        //        a.Report.AveragePrice = a.Report.SumPrices / a.Report.NumEditions;
+        //        a.Report.MedianPrice = CalculateMedianPrice(editions);
+        //        a.Report.ModaPrice = editions.GroupBy(g => g.RealPrice).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault();
+        //        a.Report.NumeroMaxStudents = editions.Max(e => e.NumStudents);
+        //        a.Report.NumeroMinStudents = editions.Min(e => e.NumStudents);
+        //        return a;
+        //    });
+
+        //    List<int> nums = new List<int> { 1, 2, 3, 4, 5 };
+        //    var result = nums.Aggregate((a, b) => a + b);
+        //    var max = nums.Aggregate((a, b) => a > b ? a : b);
+        //    var r = editions.Aggregate(new EditionsData(), (a, e) =>
+        //    {
+        //        a.NumElements++;
+        //        a.TotalPrice += e.RealPrice;
+        //        return a;
+        //    });
+        //    var avg1 = r.TotalPrice / r.NumElements;
+        //    var avg2 = editions.Aggregate(new EditionsData(), (a, e) =>
+        //    {
+        //        a.NumElements++;
+        //        a.TotalPrice += e.RealPrice;
+        //        return a;
+        //    }, a => a.TotalPrice / a.NumElements);
+        //    return r;
+        //}
 
         private decimal TempFunc(EdizioneCorso e)
         {

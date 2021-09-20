@@ -13,6 +13,7 @@ namespace Esercizi.Model
         public decimal ModaPrice { get; set; }
         public int NumeroMaxStudents { get; set; }
         public int NumeroMinStudents { get; set; }
+        public List<decimal> prices { get; set; }
 
         public Report(int numEditions, decimal sumPrices, decimal averagePrice, decimal medianPrice, decimal modaPrice, int numeroMaxStudents, int numeroMinStudents)
         {

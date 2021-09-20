@@ -20,6 +20,7 @@ namespace Esercizi.Model.Data
             EdizioneCorso r = new EdizioneCorso(3, c, new LocalDate(2021, 9, 20), new LocalDate(2021, 9, 30), 12, 50);
             EdizioneCorso p = new EdizioneCorso(4, c, new LocalDate(2021, 9, 20), new LocalDate(2021, 9, 30), 12, 20);
             courseSet.Add(c);
+            //Console.WriteLine(courseSet.Count);
             courseEditions.Add(e);
             courseEditions.Add(p);
             courseEditions.Add(h);
@@ -46,15 +47,17 @@ namespace Esercizi.Model.Data
 
         public Corso FindById(long id)
         {
-            courseSet.Contains(id);
-            //foreach(var c in courses)
-            //{
-            //    if (c.Id == id)
-            //    {
-            //        return c;
-            //    }
-            //}
-            //return null;
+            //bool exist = courseSet.Select(a => a.Id).Contains(id);
+            //Corso c = courseSet.Single(a => a.Id == id);
+            //return c;
+            foreach (var c in courses)
+            {
+                if (c.Id == id)
+                {
+                    return c;
+                }
+            }
+            return null;
         }
 
         public Corso BetterFindById(long id)
