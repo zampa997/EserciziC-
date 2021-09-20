@@ -139,23 +139,32 @@ namespace Esercizi.Model
         private LocalDate ReadLocalDate(string prompt)
         {
             bool success = false;
-            LocalDate date;
+            LocalDate date = new LocalDate(2021, 01, 01);
             do
             {
                 string answer = ReadString(prompt);
-                success = TryParse(answer, out date);
+                try
+                {
+                    success = TryParse(answer, out date);
+                }
+                catch(UnparsableValueException ex)
+                {
+                    success = false;
+                    WriteLine("Formato errato, inserire una data nel formato yyyy-MM-dd");
+                }
+                
             }
             while (!success);
             return date;
         }
 
         private bool TryParse(string input, out LocalDate date)
-        {
-            var pattern = LocalDatePattern.CreateWithInvariantCulture("yyyy-MM-dd");
+        {            
+            var pattern = LocalDatePattern.CreateWithInvariantCulture("yyyy-MM-dd"); // => DA GESTIRE
             var parseResult = pattern.Parse(input);
-            date = parseResult.GetValueOrThrow();
-            return true;
-        } 
+            date = parseResult.GetValueOrThrow();                   
+            return true;           
+        }
 
         private string ReadString(string prompt)
         {

@@ -9,7 +9,8 @@ namespace Esercizi.Model.Data
     public class InMemoryRepository : IRepository
     {
         private List<Corso> courses = new List<Corso>();
-        private List<EdizioneCorso> courseEditions = new List<EdizioneCorso>();       
+        private List<EdizioneCorso> courseEditions = new List<EdizioneCorso>();
+        private ISet<Corso> courseSet = new HashSet<Corso>(); // => rifiuta duplicati | efficace in contains
 
         public InMemoryRepository()
         {
@@ -17,21 +18,18 @@ namespace Esercizi.Model.Data
             EdizioneCorso e = new EdizioneCorso(1, c, new LocalDate(2021,9,20), new LocalDate(2021, 9, 30), 12, 100);
             EdizioneCorso h = new EdizioneCorso(2, c, new LocalDate(2021, 9, 20), new LocalDate(2021, 9, 30), 12, 50);
             EdizioneCorso r = new EdizioneCorso(3, c, new LocalDate(2021, 9, 20), new LocalDate(2021, 9, 30), 12, 50);
-            courses.Add(c);
+            EdizioneCorso p = new EdizioneCorso(4, c, new LocalDate(2021, 9, 20), new LocalDate(2021, 9, 30), 12, 20);
+            courseSet.Add(c);
             courseEditions.Add(e);
+            courseEditions.Add(p);
             courseEditions.Add(h);
             courseEditions.Add(r);
         }
 
         public Corso AddCourse(Corso c)
         {
-            if (courses.Contains(c))
-            {
-                return null;
-            }
-            courses.Add(c);
-            return c;
-       
+            bool added = courseSet.Add(c);
+            return added ? c : null;
         }
         public EdizioneCorso AddEdition(EdizioneCorso e)
         {
@@ -48,14 +46,15 @@ namespace Esercizi.Model.Data
 
         public Corso FindById(long id)
         {
-            foreach(var c in courses)
-            {
-                if (c.Id == id)
-                {
-                    return c;
-                }
-            }
-            return null;
+            courseSet.Contains(id);
+            //foreach(var c in courses)
+            //{
+            //    if (c.Id == id)
+            //    {
+            //        return c;
+            //    }
+            //}
+            //return null;
         }
 
         public Corso BetterFindById(long id)
@@ -82,6 +81,16 @@ namespace Esercizi.Model.Data
         public IEnumerable<Corso> GetCourses()
         {
             return courses;
+        }
+
+        public Report GenerateStatisticalReport(long idCorso)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CourseExists(Corso c)
+        {
+            throw new NotImplementedException();
         }
     }
 }

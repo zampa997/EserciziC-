@@ -11,5 +11,7 @@ namespace Esercizi.Model.Data
         IEnumerable<EdizioneCorso> FindEditionsByCourses(long courseId);
         EdizioneCorso AddEdition(EdizioneCorso e);
         Corso FindById(long id);
+        Report GenerateStatisticalReport(long idCorso);
+        bool CourseExists(Corso c);
     }
 }

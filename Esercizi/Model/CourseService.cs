@@ -29,7 +29,7 @@ namespace Esercizi.Model
         }
         public EdizioneCorso CreateCourseEdition(EdizioneCorso e, long idCorso)
         {
-            Corso found = Repository.FindById(idCorso);
+            Corso found = Repository.FindById(idCorso); //=> entitynonfoundexp
             if (found == null)
             {
                 return null;
@@ -42,37 +42,58 @@ namespace Esercizi.Model
             Repository.AddEdition(e);
             return e;
         }
-        public Report GenerateStatisticalReport(long idCorso)
+        public Report GenerateStatisticalReport(long idCorso) //=> in un solo giro linq
         {
             Corso found = Repository.FindById(idCorso);
-            Report report = new Report();
             if (found == null)
             {
                 return null;
             }
             IEnumerable <EdizioneCorso> editions = Repository.FindEditionsByCourses(idCorso);
-            report.NumEditions = editions.Count();
-            report.SumPrices = editions.Sum(e => e.RealPrice);
-            report.AveragePrice = report.SumPrices/report.NumEditions;
-            report.MedianPrice = CalculateMedianPrice(editions);
-            report.ModaPrice = CalculateModa(editions);
-            report.NumeroMaxStudents = (int)editions.Max(e => e.RealPrice);
-            report.NumeroMinStudents = (int)editions.Min(e => e.RealPrice);
-            return report;
+            //report.NumEditions = editions.Count();
+            //report.SumPrices = editions.Sum(e => e.RealPrice);
+            //report.AveragePrice = report.SumPrices/report.NumEditions;
+            //report.MedianPrice = CalculateMedianPrice(editions);
+            //report.ModaPrice = editions.GroupBy(g => g.RealPrice).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault();
+            ////e100 e50 e50 e25 //100(1) 50(2) 25(1) //50(2) 100(1) 25(1) // 50 100 25 // => 50
+            ////controllare se editions == null
+            //report.NumeroMaxStudents = editions.Max(e => e.NumStudents);
+            //report.NumeroMinStudents = editions.Min(e => e.NumStudents);
+            EdizioneCorso r = editions.Aggregate((a, b) => 
+            {
+                a.Report.NumEditions = editions.Count();
+                a.Report.SumPrices = editions.Sum(e => e.RealPrice);
+                a.Report.AveragePrice = a.Report.SumPrices/a.Report.NumEditions;
+                a.Report.MedianPrice = CalculateMedianPrice(editions);
+                a.Report.ModaPrice = editions.GroupBy(g => g.RealPrice).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault();
+                a.Report.NumeroMaxStudents = editions.Max(e => e.NumStudents);
+                a.Report.NumeroMinStudents = editions.Min(e => e.NumStudents);
+                return a;
+            });
+            //List<int> nums = new List<int> { 1, 2, 3, 4, 5 };
+            //var result = nums.Aggregate((a, b) => a + b);
+            //var max = nums.Aggregate((a, b) => a > b? a: b);
+            //var r = editions.Aggregate(new EditionsData(), (a, e) =>
+            //{
+            //    a.NumElements++;
+            //    a.TotalPrice += e.RealPrice;
+            //    return a;
+            //});
+            //var avg1 = r.TotalPrice / r.NumElements;
+            //var avg2 = editions.Aggregate(new EditionsData(), (a, e) =>
+            //{
+            //    a.NumElements++;
+            //    a.TotalPrice += e.RealPrice;
+            //    return a;
+            //}, a => a.TotalPrice/a.NumElements);
+            return r.Report;
         }
 
-        private decimal CalculateModa(IEnumerable<EdizioneCorso> editions)
+        private decimal TempFunc(EdizioneCorso e)
         {
-            int count = 0;
-            List<decimal> EditionsInDictionary = new List<decimal>();
-            foreach (var element in editions)
-            {
-                EditionsInDictionary.Add(element.RealPrice);
-            }
-            decimal[] modeArray = EditionsInDictionary.ToArray();
-            var mode = modeArray.GroupBy(n => n).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault();
-            return mode;
+            return e.RealPrice;
         }
+
 
         private decimal CalculateMedianPrice(IEnumerable<EdizioneCorso> editions)
         {
@@ -84,4 +105,11 @@ namespace Esercizi.Model
             return (prices[prices.Count/2]+prices[prices.Count/2-1]) / 2;
         }
     }
+
+    public class EditionsData
+    {
+        public decimal TotalPrice { get; set; }
+        public int NumElements { get; set; }
+    }
+
 }
