@@ -122,8 +122,15 @@ namespace Esercizi.Model
             decimal prezzoCorso = ReadDecimal("Inserire Prezzo corso =>");
 
             Corso c = new Corso(id, titolo, durataCorso, level, descrizione, prezzoCorso);
-            CourseService.CreateCourse(c);
-            WriteLine("Corso inserito con successo");
+            WriteLine(DIVISORE);
+            if (CourseService.CreateCourse(c) == null)
+            {
+                WriteLine("Impossibile aggiungere corsi con lo stesso ID");
+            }
+            else
+            {
+                WriteLine("Corso inserito con successo");
+            }
         }
 
         private void ShowCourses()

@@ -29,26 +29,16 @@ namespace Esercizi.Model
         }
         public EdizioneCorso CreateCourseEdition(EdizioneCorso e, long idCorso)
         {
-            Corso found = Repository.FindById(idCorso); //=> entitynonfoundexp
-            if (found == null)
-            {
-                return null;
-            }
-            e.Corso = found;
-            if (Repository.AddEdition(e) == null)
-            {
-                return null;
-            }
-            Repository.AddEdition(e);
-            return e;
+            Corso found = Repository.FindById(idCorso);
+            EdizioneCorso editionFond = Repository.AddEdition(e);
+            return found == null | editionFond == null ? null : e;
         }
 
         public Report GenerateStatisticalReport(long id)
         {
             Corso selectedCourse = Repository.FindById(id);
             List<EdizioneCorso> editions = (List<EdizioneCorso>)Repository.FindEditionsByCourses(id);
-
-            
+           
             return editions.Aggregate(new Report(), (report, edition) =>
             {
                 report.prices.Add(edition.RealPrice);

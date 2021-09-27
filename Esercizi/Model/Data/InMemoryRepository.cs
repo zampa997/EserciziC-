@@ -20,7 +20,6 @@ namespace Esercizi.Model.Data
             EdizioneCorso r = new EdizioneCorso(3, c, new LocalDate(2021, 9, 20), new LocalDate(2021, 9, 30), 12, 50);
             EdizioneCorso p = new EdizioneCorso(4, c, new LocalDate(2021, 9, 20), new LocalDate(2021, 9, 30), 12, 20);
             courseSet.Add(c);
-            //Console.WriteLine(courseSet.Count);
             courseEditions.Add(e);
             courseEditions.Add(p);
             courseEditions.Add(h);
@@ -34,56 +33,30 @@ namespace Esercizi.Model.Data
         }
         public EdizioneCorso AddEdition(EdizioneCorso e)
         {
-            foreach (var s in courseEditions)
-            {
-                if (s.Id == e.Id)
-                {
-                    return null;
-                }
-            }
-            courseEditions.Add(e);
-            return e;
+            bool added = courseEditions.Any(x => x.Id == e.Id)?true:false;
+            return added ? e : null;
         }
 
         public Corso FindById(long id)
         {
-            //bool exist = courseSet.Select(a => a.Id).Contains(id);
-            //Corso c = courseSet.Single(a => a.Id == id);
-            //return c;
-            foreach (var c in courses)
-            {
-                if (c.Id == id)
-                {
-                    return c;
-                }
-            }
-            return null;
+            return courseSet.Any(x => x.Id == id) ? courseSet.Single(x => x.Id == id) : null;
         }
 
         public Corso BetterFindById(long id)
         {
-                                                //input => output
-            return courses.SingleOrDefault(c => c.Id == id);
+            //input => output
+            return courseSet.Single(x => x.Id == id);
         }
 
         public IEnumerable<EdizioneCorso> FindEditionsByCourses(long courseId)
         {
             List<EdizioneCorso> editions = new List<EdizioneCorso>();
-
-            foreach (var ed in courseEditions)
-            {
-                if (ed.Corso.Id == courseId)
-                {
-                    editions.Add(ed);
-                }
-            }
-
-            return editions;
+            return editions = (List<EdizioneCorso>)courseEditions.Where(x => x.Corso.Id == courseId);            
         }
 
         public IEnumerable<Corso> GetCourses()
         {
-            return courses;
+            return courseSet;
         }
 
         public Report GenerateStatisticalReport(long idCorso)
