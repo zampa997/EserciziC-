@@ -1,4 +1,5 @@
 ﻿using Esercizi.Classes;
+using Esercizi.Model.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,8 @@ namespace Esercizi.Model
         public long Id { get; set; }
         public string Titolo { get; set; }
         public int AmmontareOre { get; set; }
-        public long CostoDiRiferimento { get; set; }
+        public string Descrizione { get; set; }
+        public decimal CostoDiRiferimento { get; set; }
         public Livello Livello { get; set; }
         public long IdLivello { get; set; }
         public Progetto Progetto { get; set; }
@@ -21,7 +23,7 @@ namespace Esercizi.Model
         #endregion
         #region Costructor        
         public Corso(long id, string titolo, int ammontareOre, long costoDiRiferimento, 
-            Livello livello, Progetto progetto, Categoria categoria)
+            Livello livello, Progetto progetto, Categoria categoria, string descrizione)
         {
             Id = id;
             Titolo = titolo;
@@ -33,9 +35,10 @@ namespace Esercizi.Model
             this.IdProgetto = progetto.Id;
             Categoria = categoria;
             this.IdCategoria = categoria.Id;
+            Descrizione = descrizione;
         }
         public Corso(long id, string titolo, int ammontareOre, long costoDiRiferimento,
-           long idLivello, Progetto progetto, Categoria categoria)
+           long idLivello, Progetto progetto, Categoria categoria, string descrizione)
         {
             Id = id;
             Titolo = titolo;
@@ -44,9 +47,10 @@ namespace Esercizi.Model
             this.IdLivello = idLivello;
             Progetto = progetto;
             Categoria = categoria;
+            Descrizione = descrizione;
         }
         public Corso(long id, string titolo, int ammontareOre, long costoDiRiferimento,
-           Livello livello, long idProgetto, Categoria categoria)
+           Livello livello, long idProgetto, Categoria categoria, string descrizione)
         {
             Id = id;
             Titolo = titolo;
@@ -55,9 +59,10 @@ namespace Esercizi.Model
             Livello = livello;
             this.IdProgetto = idProgetto;
             Categoria = categoria;
+            Descrizione = descrizione;
         }
         public Corso(long id, string titolo, int ammontareOre, long costoDiRiferimento,
-           Livello livello, Progetto progetto, long idCategoria)
+           Livello livello, Progetto progetto, long idCategoria, string descrizione)
         {
             Id = id;
             Titolo = titolo;
@@ -66,6 +71,23 @@ namespace Esercizi.Model
             Livello = livello;
             Progetto = progetto;
             this.IdCategoria = idCategoria;
+            Descrizione = descrizione;
+        }
+        public Corso(long id, string titolo, int ammontareOre, decimal costoDiRiferimento,
+           long idLivello, long idProgetto, long idCategoria, string descrizione)
+        {
+            Id = id;
+            Titolo = titolo;
+            AmmontareOre = ammontareOre;
+            CostoDiRiferimento = costoDiRiferimento;
+            this.IdProgetto = idProgetto;
+            this.IdLivello = idLivello;
+            this.IdCategoria = idCategoria;
+            InDBRepository dbr = new InDBRepository();
+            Progetto = dbr.GetProgettobyid(idProgetto);
+            Livello = dbr.GetLivellobyId(idLivello);
+            Categoria = dbr.GetCategoriabyId(idCategoria);
+            Descrizione = descrizione;
         }
         public Corso() { }
         #endregion

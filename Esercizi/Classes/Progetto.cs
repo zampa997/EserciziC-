@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Esercizi.Model.Data;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -27,6 +28,9 @@ namespace Esercizi.Classes
             Id = id;
             Descrizione = descrizione;
             this.IdAzienda = idAzienda;
+            InDBRepository dbr = new InDBRepository();
+            Azienda az = dbr.GetAziendabyId(idAzienda);
+            this.Azienda = az;
         }
         public Progetto() {}
         #endregion
