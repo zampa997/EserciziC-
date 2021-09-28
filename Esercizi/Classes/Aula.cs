@@ -12,6 +12,7 @@ namespace Esercizi.Classes
         public bool? IsComputerized { get; set; }
         public bool? HasProjector { get; set; }
         #endregion
+        #region Costructor
         public Aula() { }
         public Aula(long id, string name, long maxCapacity, bool isPhysical, 
             bool? isComputerized, bool? hasProjector)
@@ -23,6 +24,7 @@ namespace Esercizi.Classes
             IsComputerized = isComputerized;
             HasProjector = hasProjector;
         }
+        #endregion
     }
 
 }

@@ -16,7 +16,7 @@ namespace Esercizi.Classes
         public string Email { get; set; }
         public string PartitaIva { get; set; }
         #endregion
-        
+        #region Costructor
         public Azienda(int id, string nome, string citta, string indirizzo, 
             string cap, string telefono, string email, string partitaIva)
         {
@@ -29,5 +29,6 @@ namespace Esercizi.Classes
             Email = email;
             PartitaIva = partitaIva;
         }
+        #endregion
     }
 }
