@@ -8,6 +8,7 @@ namespace Esercizi.Model
     public class EdizioneCorso
     {
         public long Id { get; set; }
+        public string codiceEdizione { get; set; }
         public Corso Corso { get; set; }
         public LocalDate Start { get; set; }
         public LocalDate End { get; set; }
