@@ -9,14 +9,16 @@ namespace Esercizi.Classes
         #region Properties
         public int Id { get; set; }
         public string Descrizione { get; set; }
-        public string Tipo { get; set; }
+        public string Argomento { get; set; }
         #endregion
-        public Categoria(int id, string descrizione, string tipo)
+        #region Costructor
+        public Categoria(int id, string descrizione, string argomento)
         {
             Id = id;
             Descrizione = descrizione;
-            Tipo = tipo;
+            Argomento=argomento;
         }
         public Categoria() { }
+        #endregion
     }
 }

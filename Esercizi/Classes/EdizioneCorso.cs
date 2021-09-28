@@ -9,47 +9,89 @@ namespace Esercizi.Model
     public class EdizioneCorso
     {
         #region Properties
-        public long Id { get; set; }
+        static long LastId = 0;
+        public long Id { get; set; }        
         public string CodiceEdizione { get; set; }
-        public Corso Corso { get; set; }
-        public long IdCorso { get; set; }
         public LocalDate Start { get; set; }
         public LocalDate End { get; set; }
         public int NumStudents { get; set; }
         public decimal RealPrice { get; set; }
-        public  Aula Aula { get; set; }
+        public Aula Aula { get; set; }
         public long IdAula { get; set; }
         public Finanziatore Finanziatore { get; set; }
         public long IdFinanziatore { get; set; }
+        public Corso Corso { get; set; }
+        public long IdCorso { get; set; }
         #endregion
+        #region Query
 
-        public EdizioneCorso(long id, Corso corso, LocalDate start, LocalDate end, 
-            int numStudents, decimal realPrice)
+        #endregion
+        #region Costructor
+
+        public EdizioneCorso(string codice, Corso corso, LocalDate start, LocalDate end, 
+            int numStudents, decimal realPrice, Aula aula, Finanziatore finanziatore)
         {
-            Id = id;
-            Corso = corso;
-            Start = start;
-            End = end;
-            NumStudents = numStudents;
-            RealPrice = realPrice;
-            //ad += Iscrivi;
-            //Report = new Report();
+            this.Id = ++LastId; 
+            this.CodiceEdizione = codice;
+            this.Corso = corso;
+            this.IdCorso = corso.Id;
+            this.Start = start;
+            this.End = end;
+            this.NumStudents = numStudents;
+            this.RealPrice = realPrice;
+            this.Aula = aula;
+            this.IdAula = aula.Id;
+            this.Finanziatore = finanziatore;
+            this.IdFinanziatore = finanziatore.Id;
+        }
+        public EdizioneCorso(string codice, Corso corso, LocalDate start, LocalDate end,
+           int numStudents, decimal realPrice, long idAula, Finanziatore finanziatore)
+        {
+            this.Id = LastId++;
+            this.CodiceEdizione = codice;
+            this.Corso = corso;
+            this.IdCorso = corso.Id;
+            this.Start = start;
+            this.End = end;
+            this.NumStudents = numStudents;
+            this.RealPrice = realPrice;
+            this.IdAula = idAula;
+            this.Finanziatore = finanziatore;
+            this.IdFinanziatore = finanziatore.Id;
+        }
+        public EdizioneCorso(string codice, long idCorso, LocalDate start, LocalDate end,
+           int numStudents, decimal realPrice, Aula aula, Finanziatore finanziatore)
+        {
+            this.Id = LastId++;
+            this.CodiceEdizione = codice;
+            this.IdCorso = idCorso;
+            this.Start = start;
+            this.End = end;
+            this.NumStudents = numStudents;
+            this.RealPrice = realPrice;
+            this.Aula = aula;
+            this.IdAula = aula.Id;
+            this.Finanziatore = finanziatore;
+            this.IdFinanziatore = finanziatore.Id;
+        }
+        public EdizioneCorso(string codice, Corso corso, LocalDate start, LocalDate end,
+           int numStudents, decimal realPrice, Aula aula, long idFinanziatore)
+        {
+            this.Id = LastId++;
+            this.CodiceEdizione = codice;
+            this.Corso = corso;
+            this.IdCorso = corso.Id;
+            this.Start = start;
+            this.End = end;
+            this.NumStudents = numStudents;
+            this.RealPrice = realPrice;
+            this.Aula = aula;
+            this.IdAula = aula.Id;
+            this.IdFinanziatore = idFinanziatore;
         }
         public EdizioneCorso() { }
+        #endregion
 
-        public int Iscrivi()
-        {
-            return 10;
-        }
-
-        //public void AggiornaEdizione()
-        //{
-        //    NumStudents += ad();
-        //}
-        //public void ChangeAdder(AddStudents x)
-        //{
-        //    ad = x;
-        //}
         public override string ToString()
         {
             return $@"Id:{Id}
@@ -57,7 +99,9 @@ namespace Esercizi.Model
                     Data inizio:{Start}
                     Prezzo finale:{RealPrice}";
         }
+        public static long GetLastId() 
+        {
+            return 0;
+        }
     }
-    public delegate int AddStudents(); // = func
-    public delegate void EnrollStudents(int x);
 }

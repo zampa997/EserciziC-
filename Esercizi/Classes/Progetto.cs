@@ -9,17 +9,26 @@ namespace Esercizi.Classes
         #region Properties
         public int Id { get; set; }
         public string Descrizione { get; set; }
-        public string Tipo { get; set; }
         public Azienda Azienda { get; set; }
+        public long IdAzienda { get; set; }
         #endregion
-
-        public Progetto(int id, string descrizione, string tipo, 
+        #region Costructor
+        public Progetto(int id, string descrizione, 
             Azienda azienda)
         {
             Id = id;
             Descrizione = descrizione;
             Azienda = azienda;
+            this.IdAzienda = azienda.Id;
         }
-        public Progetto() { }
+        public Progetto(int id, string descrizione,
+           long idAzienda)
+        {
+            Id = id;
+            Descrizione = descrizione;
+            this.IdAzienda = idAzienda;
+        }
+        public Progetto() {}
+        #endregion
     }
 }

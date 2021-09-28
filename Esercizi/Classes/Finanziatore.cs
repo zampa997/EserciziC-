@@ -3,18 +3,16 @@
 namespace Esercizi.Classes
 {
 	public class Finanziatore
-	{
+	{//checked
 		#region Properties    
 		public int Id { get; set; }
 		public String Descrizione { get; set; }
-		public String Tipo { get; set; }
 		#endregion
 		public Finanziatore() { }
-		public Finanziatore(int id, String descrizione, String tipo)
+		public Finanziatore(int id, String descrizione)
 		{
 			Id = id;
 			Descrizione = descrizione;
-			Tipo = tipo;
 		}
 	}
 }

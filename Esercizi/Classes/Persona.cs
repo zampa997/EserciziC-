@@ -21,9 +21,8 @@ namespace Esercizi.Classes
         public Azienda Azienda { get; set; }
         public long IdAzienda { get; set; }
         #endregion
-
+        #region Costructor
         public Persona() { }
-
         public Persona(int id, DateTime dataNascita, string codiceFiscale, string gender,
             string cittaResidenza, string email, string telefono, string pIva, string ruolo, 
             Azienda azienda)
@@ -55,6 +54,7 @@ namespace Esercizi.Classes
             this.Ruolo = ruolo;
             this.IdAzienda = idAzienda;
         }
+        #endregion
 
     }
 }
