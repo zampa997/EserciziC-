@@ -105,7 +105,7 @@ namespace Esercizi.Model
             long id = ReadLong("Inserire ID =>");
             string titolo = ReadString("Inserire Titolo =>");
             string descrizione = ReadString("Inserire Descrizione =>");
-            ExperienceLevel level;
+            //ExperienceLevel level;
             bool ExpIsGood = false;
             do
             {

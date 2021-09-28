@@ -6,9 +6,11 @@ namespace Esercizi.Model
 {
     public class Livello
     {
+        #region Properties
         public int Id { get; set; }
         public string Descrizione { get; set; }
         public tipo Tipo { get; set; }
+        #endregion
 
         public Livello(int id, string descrizione, string tipo)
         {

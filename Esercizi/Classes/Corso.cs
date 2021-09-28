@@ -7,6 +7,7 @@ namespace Esercizi.Model
 {
     public class Corso
     {
+        #region Properties
         public long Id { get; set; }
         public string Titolo { get; set; }
         public int AmmontareOre { get; set; }
@@ -14,7 +15,9 @@ namespace Esercizi.Model
         public Livello Livello { get; set; }
         public Progetto Progetto { get; set; }
         public Categoria Categoria { get; set; }
-        public Corso(long id, string titolo, int ammontareOre, long costoDiRiferimento, Livello livello, Progetto progetto, Categoria categoria)
+        #endregion
+        public Corso(long id, string titolo, int ammontareOre, long costoDiRiferimento, 
+            Livello livello, Progetto progetto, Categoria categoria)
         {
             Id = id;
             Titolo = titolo;
@@ -24,12 +27,13 @@ namespace Esercizi.Model
             Progetto = progetto;
             Categoria = categoria;
         }
-
+        public Corso() { }
         //override equal MA hashcode
 
         public override string ToString()
         {
-            return $"Id:{Id} | Titolo:{Titolo}";
+            return $@"Id:{Id}
+                    Titolo:{Titolo}";
         }
 
         public override bool Equals(object obj)

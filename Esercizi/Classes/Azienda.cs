@@ -5,7 +5,8 @@ using System.Text;
 namespace Esercizi.Classes
 {
     public class Azienda
-    {
+    { //checked
+        #region Properties
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Citta { get; set; }
@@ -14,7 +15,10 @@ namespace Esercizi.Classes
         public string Telefono { get; set; }
         public string Email { get; set; }
         public string PartitaIva { get; set; }
-        public Azienda(int id, string nome, string citta, string indirizzo, string cap, string telefono, string email, string partitaIva)
+        #endregion
+        
+        public Azienda(int id, string nome, string citta, string indirizzo, 
+            string cap, string telefono, string email, string partitaIva)
         {
             Id = id;
             Nome = nome;
