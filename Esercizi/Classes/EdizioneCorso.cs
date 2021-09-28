@@ -14,12 +14,10 @@ namespace Esercizi.Model
         public LocalDate End { get; set; }
         public int NumStudents { get; set; }
         public decimal RealPrice { get; set; }
-        public Report Report { get; set; }
-
-        private Func<int> ad1; // input, void
-        private Func<int, double> ad3; // input, output
-        private Action<int> act1; // output
-        private AddStudents ad;
+        public Presenza Presenza { get; set; }
+        public  Aula Aula { get; set; }
+        public Corso Corso { get; set; }
+        public Finanziatore Finanziatore { get; set; }
 
         public EdizioneCorso(long id, Corso corso, LocalDate start, LocalDate end, int numStudents, decimal realPrice)
         {
