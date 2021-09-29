@@ -1,4 +1,5 @@
 ﻿using Esercizi.Classes;
+using NodaTime;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -35,6 +36,10 @@ namespace Esercizi.Model.Data
             const string SELECT_CORSO = @"Select id, titolo, descrizione, ammontare_ore, costo_di_riferimento, id_livello, id_progetto, id_categoria
                                           FROM dbo.corso
                                           where @id=id";
+            const string SELECT_ALL_CORSO = @"Select id, titolo, descrizione, ammontare_ore, costo_di_riferimento, id_livello, id_progetto, id_categoria
+                                            FROM dbo.corso";
+            const string SELECT_ALL_EDITIONS = @"Select id, codice_edizione, data_inizio, data_fine, prezzo_finale, numero_studenti_massimo, id_presenza, id_aula, id_corso, id_finanziatore
+                                                FROM dbo.edizioni";
         #endregion
         #region QueryInsert
         const string INSERT_AULA = @"INSERT INTO dbo.aula (id, nome, capacita_massima, fisica, computerizzata, proiettore)
@@ -48,9 +53,11 @@ namespace Esercizi.Model.Data
             const string INSERT_LIVELLO = @"INSERT INTO dbo.livello (id, descrizione, tipo)
                                             VALUES (@id, @descrizione, @tipo);";
             const string INSERT_CORSO = @"INSERT INTO dbo.corso (id, titolo, ammontare_ore, costo_di_riferimento, id_progetto, id_livello, id_categoria)
-                                                VALUES (@id, @titolo, @ammontare_ore, @costo_di_riferimento, @id_progetto, @id_livello, @id_categoria);";
+                                          OUPUT INSERTED.id  
+                                          VALUES (@id, @titolo, @ammontare_ore, @costo_di_riferimento, @id_progetto, @id_livello, @id_categoria);";
             const string INSERT_EDIZIONE = @"INSERT INTO dbo.edizione (id, codice_edizione, data_inizio, data_fine, prezzo_finale, numero_studenti_massimo, id_presenza, id_aula, id_corso, id_finanziatore)
-                                                    VALUES (@id, @codice_edizione, @data_inizio, @data_fine, @prezzo_finale, @numero_studenti_massimo, @id_presenza, @id_aula, @id_corso, @id_finanziatore);";
+                                             OUPUT INSERTED.id 
+                                             VALUES (@id, @codice_edizione, @data_inizio, @data_fine, @prezzo_finale, @numero_studenti_massimo, @id_presenza, @id_aula, @id_corso, @id_finanziatore);";
         #endregion
         #endregion
 
@@ -74,6 +81,7 @@ namespace Esercizi.Model.Data
                     {
                         if (reader.Read())
                         {
+                            int id = (int)idCorso;
                             string titolo = reader.GetString("nome");
                             string descrizione = reader.GetString("descrizione");
                             int ammontare_ore = reader.GetInt32("ammontare_ore");
@@ -81,7 +89,7 @@ namespace Esercizi.Model.Data
                             int id_livello = reader.GetInt32("id_livello");
                             int id_progetto = reader.GetInt32("id_progetto");
                             int id_categoria = reader.GetInt32("id_categoria");
-                            cr = new Corso( idCorso,  titolo, ammontare_ore, (long)costo_di_riferimento, id_livello, id_progetto, id_categoria, descrizione);
+                            cr = new Corso(id, titolo, ammontare_ore, (long)costo_di_riferimento, id_livello, id_progetto, id_categoria, descrizione);                           
                         }
                         return cr;
                     }
@@ -100,7 +108,7 @@ namespace Esercizi.Model.Data
                 using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
                 {
                     SqlCommand cmd = new SqlCommand(INSERT_CORSO, conn);
-                    cmd.Parameters.AddWithValue("@id", corso.Id);
+                    //cmd.Parameters.AddWithValue("@id", corso.Id);
                     cmd.Parameters.AddWithValue("@nome", corso.Titolo);
                     cmd.Parameters.AddWithValue("@descrizione", corso.Descrizione);
                     cmd.Parameters.AddWithValue("@ammontare_ore", corso.AmmontareOre);
@@ -109,7 +117,10 @@ namespace Esercizi.Model.Data
                     cmd.Parameters.AddWithValue("@id_progetto", corso.IdProgetto);
                     cmd.Parameters.AddWithValue("@id_categoria", corso.IdCategoria);
                     conn.Open();
-                    cmd.ExecuteNonQuery();
+                    //cmd.ExecuteNonQuery();
+                    long newId = (long)cmd.ExecuteScalar();
+                    corso.Id = newId;
+                    
                 }
             }
             catch (SqlException e)
@@ -123,8 +134,7 @@ namespace Esercizi.Model.Data
             {
                 using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
                 {
-                    Corso cr = null;
-                    SqlCommand cmd = new SqlCommand(SELECT_CORSO, conn);
+                    SqlCommand cmd = new SqlCommand(SELECT_ALL_CORSO, conn);
                     List<Corso> r = new List<Corso>();
                     conn.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -139,7 +149,7 @@ namespace Esercizi.Model.Data
                             int id_livello = reader.GetInt32("id_livello");
                             int id_progetto = reader.GetInt32("id_progetto");
                             int id_categoria = reader.GetInt32("id_categoria");
-                            cr = new Corso(id, titolo, ammontare_ore, (long)costo_di_riferimento, id_livello, id_progetto, id_categoria, descrizione);
+                            Corso cr = new Corso(id, titolo, ammontare_ore, (long)costo_di_riferimento, id_livello, id_progetto, id_categoria, descrizione);
                             r.Add(cr);
                         }
                         return r;
@@ -173,7 +183,9 @@ namespace Esercizi.Model.Data
                     cmd.Parameters.AddWithValue("@id_corso", edizione.IdCorso);
                     cmd.Parameters.AddWithValue("@id_finanziatore", edizione.IdFinanziatore);
                     conn.Open();
-                    cmd.ExecuteNonQuery();
+                    long newId = (long)cmd.ExecuteScalar();
+                    edizione.Id = newId;
+                    //cmd.ExecuteNonQuery();
                 }
             }
             catch (SqlException e)
@@ -183,7 +195,40 @@ namespace Esercizi.Model.Data
         }
         public IEnumerable<EdizioneCorso> FindEditionsByCourses(long courseId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+                {
+                     
+                    SqlCommand cmd = new SqlCommand(SELECT_ALL_EDITIONS, conn);
+                    List<EdizioneCorso> r = new List<EdizioneCorso>();
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32("id");
+                            string codice_edizione = reader.GetString("codice_edizione");
+                            DateTime data_inizio = reader.GetDateTime(reader.GetOrdinal("data_inizio"));
+                            DateTime data_fine = reader.GetDateTime(reader.GetOrdinal("data_fine"));
+                            decimal prezzo_finale = reader.GetDecimal("prezzo_finale");
+                            int numero_studenti_massimo = reader.GetInt32("numero_studenti_massimo");
+                            long id_presenza = reader.GetInt32("id_presenza");
+                            long id_aula = reader.GetInt32("id_aula");
+                            long id_corso = reader.GetInt32("id_corso");
+                            long id_finanziatore = reader.GetInt32("id_finanziatore");
+                            EdizioneCorso cr = new EdizioneCorso(codice_edizione, id_corso, data_inizio, data_fine, numero_studenti_massimo, prezzo_finale, id_aula, id_finanziatore);
+                            r.Add(cr);
+                        }
+                        return r;
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
         public Report GenerateStatisticalReport(long idCorso)
         {

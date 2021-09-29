@@ -29,72 +29,71 @@ namespace Esercizi.Model
         #endregion
         #region Costructor
 
-        public EdizioneCorso(string codice, Corso corso, LocalDate start, LocalDate end, 
-            int numStudents, decimal realPrice, Aula aula, Finanziatore finanziatore)
-        {
-            this.Id = ++LastId; 
-            this.CodiceEdizione = codice;
-            this.Corso = corso;
-            this.IdCorso = corso.Id;
-            this.Start = start;
-            this.End = end;
-            this.NumStudents = numStudents;
-            this.RealPrice = realPrice;
-            this.Aula = aula;
-            this.IdAula = aula.Id;
-            this.Finanziatore = finanziatore;
-            this.IdFinanziatore = finanziatore.Id;
-        }
-        public EdizioneCorso(string codice, Corso corso, LocalDate start, LocalDate end,
-           int numStudents, decimal realPrice, long idAula, Finanziatore finanziatore)
-        {
-            this.Id = LastId++;
-            this.CodiceEdizione = codice;
-            this.Corso = corso;
-            this.IdCorso = corso.Id;
-            this.Start = start;
-            this.End = end;
-            this.NumStudents = numStudents;
-            this.RealPrice = realPrice;
-            this.IdAula = idAula;
-            this.Finanziatore = finanziatore;
-            this.IdFinanziatore = finanziatore.Id;
-        }
-        public EdizioneCorso(string codice, long idCorso, LocalDate start, LocalDate end,
-           int numStudents, decimal realPrice, Aula aula, Finanziatore finanziatore)
-        {
-            this.Id = LastId++;
-            this.CodiceEdizione = codice;
-            this.IdCorso = idCorso;
-            this.Start = start;
-            this.End = end;
-            this.NumStudents = numStudents;
-            this.RealPrice = realPrice;
-            this.Aula = aula;
-            this.IdAula = aula.Id;
-            this.Finanziatore = finanziatore;
-            this.IdFinanziatore = finanziatore.Id;
-        }
-        public EdizioneCorso(string codice, Corso corso, LocalDate start, LocalDate end,
-           int numStudents, decimal realPrice, Aula aula, long idFinanziatore)
-        {
-            this.Id = LastId++;
-            this.CodiceEdizione = codice;
-            this.Corso = corso;
-            this.IdCorso = corso.Id;
-            this.Start = start;
-            this.End = end;
-            this.NumStudents = numStudents;
-            this.RealPrice = realPrice;
-            this.Aula = aula;
-            this.IdAula = aula.Id;
-            this.IdFinanziatore = idFinanziatore;
-        }
+        //public EdizioneCorso(string codice, Corso corso, LocalDate start, LocalDate end, 
+        //    int numStudents, decimal realPrice, Aula aula, Finanziatore finanziatore)
+        //{
+        //    this.Id = ++LastId; 
+        //    this.CodiceEdizione = codice;
+        //    this.Corso = corso;
+        //    this.IdCorso = corso.Id;
+        //    this.Start = start;
+        //    this.End = end;
+        //    this.NumStudents = numStudents;
+        //    this.RealPrice = realPrice;
+        //    this.Aula = aula;
+        //    this.IdAula = aula.Id;
+        //    this.Finanziatore = finanziatore;
+        //    this.IdFinanziatore = finanziatore.Id;
+        //}
+        //public EdizioneCorso(string codice, Corso corso, LocalDate start, LocalDate end,
+        //   int numStudents, decimal realPrice, long idAula, Finanziatore finanziatore)
+        //{
+        //    this.Id = LastId++;
+        //    this.CodiceEdizione = codice;
+        //    this.Corso = corso;
+        //    this.IdCorso = corso.Id;
+        //    this.Start = start;
+        //    this.End = end;
+        //    this.NumStudents = numStudents;
+        //    this.RealPrice = realPrice;
+        //    this.IdAula = idAula;
+        //    this.Finanziatore = finanziatore;
+        //    this.IdFinanziatore = finanziatore.Id;
+        //}
+        //public EdizioneCorso(string codice, long idCorso, LocalDate start, LocalDate end,
+        //   int numStudents, decimal realPrice, Aula aula, Finanziatore finanziatore)
+        //{
+        //    this.Id = LastId++;
+        //    this.CodiceEdizione = codice;
+        //    this.IdCorso = idCorso;
+        //    this.Start = start;
+        //    this.End = end;
+        //    this.NumStudents = numStudents;
+        //    this.RealPrice = realPrice;
+        //    this.Aula = aula;
+        //    this.IdAula = aula.Id;
+        //    this.Finanziatore = finanziatore;
+        //    this.IdFinanziatore = finanziatore.Id;
+        //}
+        //public EdizioneCorso(string codice, Corso corso, LocalDate start, LocalDate end,
+        //   int numStudents, decimal realPrice, Aula aula, long idFinanziatore)
+        //{
+        //    this.Id = LastId++;
+        //    this.CodiceEdizione = codice;
+        //    this.Corso = corso;
+        //    this.IdCorso = corso.Id;
+        //    this.Start = start;
+        //    this.End = end;
+        //    this.NumStudents = numStudents;
+        //    this.RealPrice = realPrice;
+        //    this.Aula = aula;
+        //    this.IdAula = aula.Id;
+        //    this.IdFinanziatore = idFinanziatore;
+        //}
         public EdizioneCorso(string codice, long idCorso, LocalDate start, LocalDate end,
           int numStudents, decimal realPrice, long idAula, long idFinanziatore)
-        {
+        {           
             InDBRepository dbr = new InDBRepository();
-            this.Id = LastId++;
             this.CodiceEdizione = codice;
             this.Start = start;
             this.End = end;
