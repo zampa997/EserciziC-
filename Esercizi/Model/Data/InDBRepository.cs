@@ -129,7 +129,7 @@ namespace Esercizi.Model.Data
                     conn.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                         {
                             int id = reader.GetInt32("id");
                             string titolo = reader.GetString("nome");
