@@ -55,6 +55,5 @@ namespace Esercizi.Classes
             this.IdAzienda = idAzienda;
         }
         #endregion
-
     }
 }
