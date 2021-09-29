@@ -9,15 +9,15 @@ namespace Esercizi.Model
 {
     public class UserInterface
     {
-        public CourseService CourseService { get; set; }
+        //public CourseService CourseService { get; set; }
         const string DIVISORE = "==============================================================";
         const string MAIN_MENU = "Operazioni disponibili: inserisci\na per vedere tutti i corsi\nc per aggiungere un corso\ne per cercare le edizioni di un corso\nb per inserire un edizione di un corso\nr per creare un report\nq per terminare il programma";
         const string BASE_PROMPT = "=>";
 
-        public UserInterface(CourseService service)
-        {
-            CourseService = service;
-        }
+        //public UserInterface(CourseService service)
+        //{
+        //    CourseService = service;
+        //}
 
         public void Start()
         {
@@ -26,46 +26,46 @@ namespace Esercizi.Model
             //la mediana del prezzo delle edizioni, la moda dei prezzi delle edizioni, numero max studenti e numero min studenti
             //OUTPUT => n-edizioni | somma prezzi | media prezzi | mediana prezzi | moda prezzi | n-max studenti | n-min studenti           
             bool quit = false;
-            do
-            {
-                WriteLine(DIVISORE);
-                WriteLine(MAIN_MENU);
-                char c = ReadChar(BASE_PROMPT);
-                switch (c)
-                {
-                    case 'a':
-                        ShowCourses();
-                        break;
-                    case 'c':
-                        //CreateCourse();
-                        break;
-                    case 'b':
-                        //CreateCourseEdition();
-                        break;
-                    case 'r':
-                        GenerateReport();
-                        break;
-                    case 'e':
-                        ShowCourseEditionsByCourse();
-                        break;
-                    case 'q':
-                        quit = true;
-                        break;
-                    default:
-                        WriteLine("Comando non riconoscuto");
-                        break;
-                }
-            }
-            while (!quit);          
+            //do
+            //{
+            //    WriteLine(DIVISORE);
+            //    WriteLine(MAIN_MENU);
+            //    char c = ReadChar(BASE_PROMPT);
+            //    switch (c)
+            //    {
+            //        case 'a':
+            //            ShowCourses();
+            //            break;
+            //        case 'c':
+            //            //CreateCourse();
+            //            break;
+            //        case 'b':
+            //            //CreateCourseEdition();
+            //            break;
+            //        case 'r':
+            //            GenerateReport();
+            //            break;
+            //        case 'e':
+            //            ShowCourseEditionsByCourse();
+            //            break;
+            //        case 'q':
+            //            quit = true;
+            //            break;
+            //        default:
+            //            WriteLine("Comando non riconoscuto");
+            //            break;
+            //    }
+            //}
+            //while (!quit);          
         }
 
-        private void GenerateReport()
-        {
-            long id = ReadLong("Inserire Id corso per generare un report =>");
-            Report r = CourseService.GenerateStatisticalReport(id);
-            WriteLine(DIVISORE);
-            WriteLine($"Numero edizioni: {r.NumEditions} \nSomma dei prezzi: {r.SumPrices} \nMedia dei prezzi: {r.AveragePrice} \nMediana dei prezzi: {r.MedianPrice} \nModa dei prezzi: {r.ModaPrice} \nNumero massimo studenti: {r.NumeroMaxStudents} \nNumero minimo studenti: {r.NumeroMinStudents}");
-        }
+        //private void GenerateReport()
+        //{
+        //    long id = ReadLong("Inserire Id corso per generare un report =>");
+        //    Report r = CourseService.GenerateStatisticalReport(id);
+        //    WriteLine(DIVISORE);
+        //    WriteLine($"Numero edizioni: {r.NumEditions} \nSomma dei prezzi: {r.SumPrices} \nMedia dei prezzi: {r.AveragePrice} \nMediana dei prezzi: {r.MedianPrice} \nModa dei prezzi: {r.ModaPrice} \nNumero massimo studenti: {r.NumeroMaxStudents} \nNumero minimo studenti: {r.NumeroMinStudents}");
+        //}
 
         //private void CreateCourseEdition()
         //{
@@ -89,16 +89,16 @@ namespace Esercizi.Model
         //    }          
         //}
 
-        private void ShowCourseEditionsByCourse()
-        {
-            long id = ReadLong("Inserire Id corso =>");
-            IEnumerable<EdizioneCorso> editions = CourseService.GetCourseEditions(id);
-            WriteLine(DIVISORE);
-            foreach (var c in editions)
-            {
-                WriteLine(c.ToString());
-            }
-        }
+        //private void ShowCourseEditionsByCourse()
+        //{
+        //    long id = ReadLong("Inserire Id corso =>");
+        //    IEnumerable<EdizioneCorso> editions = CourseService.GetCourseEditions(id);
+        //    WriteLine(DIVISORE);
+        //    foreach (var c in editions)
+        //    {
+        //        WriteLine(c.ToString());
+        //    }
+        //}
 
         //private void CreateCourse()
         //{
@@ -133,15 +133,15 @@ namespace Esercizi.Model
         //    }
         //}
 
-        private void ShowCourses()
-        {
-            IEnumerable<Corso> courses = CourseService.GetAllCourses();
-            WriteLine(DIVISORE);
-            foreach(var c in courses)
-            {
-                WriteLine(c.ToString());
-            }
-        }
+        //private void ShowCourses()
+        //{
+        //    IEnumerable<Corso> courses = CourseService.GetAllCourses();
+        //    WriteLine(DIVISORE);
+        //    foreach(var c in courses)
+        //    {
+        //        WriteLine(c.ToString());
+        //    }
+        //}
 
         private LocalDate ReadLocalDate(string prompt)
         {

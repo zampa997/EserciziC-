@@ -9,13 +9,13 @@ namespace Esercizi.Model.Data
     {
         #region Corsi
         IEnumerable<Corso> GetCourses();
-        Corso SetCourse(Corso c);
+        void SetCourse(Corso c);
         Corso GetCourseById(long id);
         bool CourseExists(Corso c);
         #endregion
         #region Edizioni Corso
         IEnumerable<EdizioneCorso> FindEditionsByCourses(long courseId);
-        EdizioneCorso SetEdition(EdizioneCorso e);
+        void SetEdition(EdizioneCorso e);
         Report GenerateStatisticalReport(long idCorso);
         #endregion
         #region Like a Virgin

@@ -9,11 +9,11 @@ namespace Esercizi
     {
         static void Main(string[] args)
         {
-            IRepository repo = new InMemoryRepository();
-            CourseService cs = new CourseService(repo);
-            UserInterface ui = new UserInterface(cs);
-            //iniezione dipendenze
-            ui.Start();
+            //IRepository repo = new InMemoryRepository();
+            //CourseService cs = new CourseService(repo);
+            //UserInterface ui = new UserInterface(cs);
+            ////iniezione dipendenze
+            //ui.Start();
             //EdizioneCorso ed = new EdizioneCorso(3, null, new LocalDate(2021, 9, 20), new LocalDate(2021, 9, 30), 12, 50);
             //Console.WriteLine(ed.NumStudents);
             //ed.AggiornaEdizione();

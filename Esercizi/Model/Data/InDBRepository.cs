@@ -93,7 +93,7 @@ namespace Esercizi.Model.Data
                 return null;
             }
         }
-        public void SetCourse(Corso corso)
+        public void SetCourse(Corso corso) 
         {
             try
             {
@@ -465,6 +465,7 @@ namespace Esercizi.Model.Data
                 Console.WriteLine("Errore, inserimento non andato a buon fine: " + e.Message);
             }
         }
+        
         #endregion
     }
 }
