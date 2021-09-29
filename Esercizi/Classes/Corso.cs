@@ -7,7 +7,7 @@ using System.Text;
 namespace Esercizi.Model
 {
     public class Corso
-    {
+    {//checked
         #region Properties
         public long Id { get; set; }
         public string Titolo { get; set; }

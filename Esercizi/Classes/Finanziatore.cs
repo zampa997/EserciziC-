@@ -5,14 +5,21 @@ namespace Esercizi.Classes
 	public class Finanziatore
 	{//checked
 		#region Properties    
-		public int Id { get; set; }
+		public long Id { get; set; }
 		public String Descrizione { get; set; }
-		#endregion
-		public Finanziatore() { }
-		public Finanziatore(int id, String descrizione)
+        #endregion
+        #region Costructor
+
+        public Finanziatore() { }
+		public Finanziatore(String descrizione)
 		{
-			Id = id;
 			Descrizione = descrizione;
 		}
+		public Finanziatore(long id, String descrizione)
+		{
+			this.Id = id;
+			Descrizione = descrizione;
+		}
+		#endregion
 	}
 }

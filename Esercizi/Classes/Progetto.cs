@@ -29,8 +29,15 @@ namespace Esercizi.Classes
             Descrizione = descrizione;
             this.IdAzienda = idAzienda;
             InDBRepository dbr = new InDBRepository();
-            Azienda az = dbr.GetAziendabyId(idAzienda);
-            this.Azienda = az;
+            this.Azienda = dbr.GetAziendabyId(idAzienda);
+        }
+        public Progetto(string descrizione,
+          long idAzienda)
+        {
+            Descrizione = descrizione;
+            this.IdAzienda = idAzienda;
+            InDBRepository dbr = new InDBRepository();
+            this.Azienda = dbr.GetAziendabyId(idAzienda);
         }
         public Progetto() {}
         #endregion

@@ -8,7 +8,7 @@ using System.Text;
 namespace Esercizi.Model
 {
     public class EdizioneCorso
-    {
+    {//checked
         #region Properties
         static long LastId = 0;
         public long Id { get; set; }        
@@ -94,6 +94,23 @@ namespace Esercizi.Model
           int numStudents, decimal realPrice, long idAula, long idFinanziatore)
         {           
             InDBRepository dbr = new InDBRepository();
+            this.CodiceEdizione = codice;
+            this.Start = start;
+            this.End = end;
+            this.NumStudents = numStudents;
+            this.RealPrice = realPrice;
+            this.Aula = dbr.GetAulabyId(idAula);
+            this.IdAula = idAula;
+            this.Finanziatore = dbr.GetFinanziatorebyId(idFinanziatore);
+            this.IdFinanziatore = idFinanziatore;
+            this.Corso = dbr.GetCourseById(idCorso);
+            this.IdCorso = idCorso;
+        }
+        public EdizioneCorso(long id, string codice, long idCorso, LocalDate start, LocalDate end,
+         int numStudents, decimal realPrice, long idAula, long idFinanziatore)
+        {
+            InDBRepository dbr = new InDBRepository();
+            this.Id = id;
             this.CodiceEdizione = codice;
             this.Start = start;
             this.End = end;

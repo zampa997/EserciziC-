@@ -19,8 +19,16 @@ namespace Esercizi.Classes
         public Aula(long id, string name, long maxCapacity, bool isPhysical, 
             bool? isComputerized, bool? hasProjector)
         {
-            LastId += 1;
-            Id = LastId;
+            this.Id = id;
+            Name = name;
+            MaxCapacity = maxCapacity;
+            IsPhysical = isPhysical;
+            IsComputerized = isComputerized;
+            HasProjector = hasProjector;
+        }
+        public Aula(string name, long maxCapacity, bool isPhysical,
+            bool? isComputerized, bool? hasProjector)
+        {
             Name = name;
             MaxCapacity = maxCapacity;
             IsPhysical = isPhysical;
@@ -28,8 +36,8 @@ namespace Esercizi.Classes
             HasProjector = hasProjector;
         }
         #endregion
-        }
     }
+    
 
 }
 

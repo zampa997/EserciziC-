@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Esercizi.Model.Data;
+using NodaTime;
+using System;
 
 namespace Esercizi.Classes
 {
@@ -6,8 +8,8 @@ namespace Esercizi.Classes
     {//checked
         #region Properties
         public int Id { get; set; }
-        public DateTime Inizio { get; set; }
-        public DateTime Fine { get; set; }
+        public LocalDate Inizio { get; set; }
+        public LocalDate Fine { get; set; }
         public string Nota { get; set; }
         public Persona Persona { get; set; }
         public long IdPersona { get; set; }
@@ -16,7 +18,7 @@ namespace Esercizi.Classes
         #endregion
         #region Costructor
         public Presenza() { }
-        public Presenza(int id, DateTime inzio, DateTime fine, String nota,
+        public Presenza(int id, LocalDate inzio, LocalDate fine, String nota,
             Persona persona, Lezione lezione)
         {
             Id = id;
@@ -28,7 +30,7 @@ namespace Esercizi.Classes
             Lezione = lezione;
             this.IdLezione = lezione.Id;
         }
-        public Presenza(int id, DateTime inzio, DateTime fine, String nota,
+        public Presenza(int id, LocalDate inzio, LocalDate fine, String nota,
            long idPersona, Lezione lezione)
         {
             Id = id;
@@ -39,7 +41,7 @@ namespace Esercizi.Classes
             Lezione = lezione;
             this.IdLezione = lezione.Id;
         }
-        public Presenza(int id, DateTime inzio, DateTime fine, String nota,
+        public Presenza(int id, LocalDate inzio, LocalDate fine, String nota,
            Persona persona, long idLezione)
         {
             Id = id;
@@ -49,6 +51,31 @@ namespace Esercizi.Classes
             Persona = persona;
             this.IdPersona = persona.Id;
             this.IdLezione = idLezione;
+        }
+        public Presenza(int id, LocalDate inzio, LocalDate fine, String nota,
+          long idPersona, long idLezione)
+        {
+            InDBRepository dbr = new InDBRepository();
+            Id = id;
+            Inizio = inzio;
+            Fine = fine;
+            Nota = nota;
+            this.IdPersona = idPersona;
+            //this.Persona = dbr.getPersonabyId(idPersona);
+            this.IdLezione = idLezione;
+            //this.Lezione = dbr.getLezionebyId(idLezione);
+        }
+        public Presenza(LocalDate inzio, LocalDate fine, String nota,
+         long idPersona, long idLezione)
+        {
+            InDBRepository dbr = new InDBRepository();
+            Inizio = inzio;
+            Fine = fine;
+            Nota = nota;
+            this.IdPersona = idPersona;
+            //this.Persona = dbr.getPersonabyId(idPersona);
+            this.IdLezione = idLezione;
+            //this.Lezione = dbr.getLezionebyId(idLezione);
         }
         #endregion
     }

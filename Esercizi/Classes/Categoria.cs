@@ -5,7 +5,7 @@ using System.Text;
 namespace Esercizi.Classes
 {
     public class Categoria
-    { // checked
+    { //checked
         #region Properties
         public int Id { get; set; }
         public string Descrizione { get; set; }
@@ -17,6 +17,11 @@ namespace Esercizi.Classes
             Id = id;
             Descrizione = descrizione;
             Argomento=argomento;
+        }
+        public Categoria(string descrizione, string argomento)
+        {
+            Descrizione = descrizione;
+            Argomento = argomento;
         }
         public Categoria() { }
         #endregion

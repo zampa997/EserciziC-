@@ -5,7 +5,7 @@ using System.Text;
 namespace Esercizi.Model
 {
     public class Livello
-    {//checked
+    {//checked 
         #region Properties
         public int Id { get; set; }
         public string Descrizione { get; set; }
@@ -43,6 +43,29 @@ namespace Esercizi.Model
             MEDIO,
             ESPERTO,
             GURU
+        }
+        public Livello(string descrizione, string tipo)
+        {
+            Descrizione = descrizione;
+            switch (tipo.ToUpper())
+            {
+                case "PRINCIPIANTE":
+                    Tipo = Livello.tipo.PRINCIPIANTE;
+                    break;
+                case "MEDIO":
+                    Tipo = Livello.tipo.MEDIO;
+                    break;
+                case "ESPERTO":
+                    Tipo = Livello.tipo.ESPERTO;
+                    break;
+                case "GURU":
+                    Tipo = Livello.tipo.GURU;
+                    break;
+                default:
+                    Console.WriteLine(@"Pippo pippa il pippa che pippa
+                    Che palle samu e' pignolo, senti vai a Livello riga 34/35");
+                    break;
+            }
         }
         #endregion
     }

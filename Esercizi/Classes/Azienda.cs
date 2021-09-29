@@ -29,6 +29,17 @@ namespace Esercizi.Classes
             Email = email;
             PartitaIva = partitaIva;
         }
+        public Azienda(string nome, string citta, string indirizzo,
+           string cap, string telefono, string email, string partitaIva)
+        {
+            Nome = nome;
+            Citta = citta;
+            Indirizzo = indirizzo;
+            Cap = cap;
+            Telefono = telefono;
+            Email = email;
+            PartitaIva = partitaIva;
+        }
         #endregion
     }
 }

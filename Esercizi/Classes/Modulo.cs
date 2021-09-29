@@ -1,4 +1,5 @@
 ﻿using Esercizi.Model;
+using Esercizi.Model.Data;
 
 namespace Esercizi.Classes
 {
@@ -16,39 +17,64 @@ namespace Esercizi.Classes
         #endregion
         #region Costructor
         public Modulo() { }
+        //public Modulo(int id, string nome, decimal ore, string descrizione,
+        //    Persona docente, EdizioneCorso edizione)
+        //{
+        //    this.Id = id;
+        //    this.Nome = nome;
+        //    this.Ore = ore;
+        //    this.Descrizione = descrizione;
+        //    this.Docente = docente;
+        //    this.IdDocente = docente.Id;
+        //    this.Edizione = edizione;
+        //    this.IdEdizione = edizione.Id;
+        //}
+        //public Modulo(int id, string nome, decimal ore, string descrizione,
+        //   long idDocente, EdizioneCorso edizione)
+        //{
+        //    this.Id = id;
+        //    this.Nome = nome;
+        //    this.Ore = ore;
+        //    this.Descrizione = descrizione;
+        //    this.IdDocente = idDocente;
+        //    this.Edizione = edizione;
+        //    this.IdEdizione = edizione.Id;
+        //}
+        //public Modulo(int id, string nome, decimal ore, string descrizione,
+        //   Persona docente, long idEdizione)
+        //{
+        //    this.Id = id;
+        //    this.Nome = nome;
+        //    this.Ore = ore;
+        //    this.Descrizione = descrizione;
+        //    this.Docente = docente;
+        //    this.IdDocente = docente.Id;
+        //    this.IdEdizione = idEdizione;
+        //}
         public Modulo(int id, string nome, decimal ore, string descrizione,
-            Persona docente, EdizioneCorso edizione)
+          long idDocente, long idEdizione)
         {
-            this.Id = id;
-            this.Nome = nome;
-            this.Ore = ore;
-            this.Descrizione = descrizione;
-            this.Docente = docente;
-            this.IdDocente = docente.Id;
-            this.Edizione = edizione;
-            this.IdEdizione = edizione.Id;
-        }
-        public Modulo(int id, string nome, decimal ore, string descrizione,
-           long idDocente, EdizioneCorso edizione)
-        {
+            InDBRepository dbr = new InDBRepository();
             this.Id = id;
             this.Nome = nome;
             this.Ore = ore;
             this.Descrizione = descrizione;
             this.IdDocente = idDocente;
-            this.Edizione = edizione;
-            this.IdEdizione = edizione.Id;
+            //this.Docente = dbr.getPersonabyId(idDocente);
+            this.IdEdizione = idEdizione;
+            //this.Edizione = dbr.getEditionbyId(idEdizione);
         }
-        public Modulo(int id, string nome, decimal ore, string descrizione,
-           Persona docente, long idEdizione)
+        public Modulo(string nome, decimal ore, string descrizione,
+         long idDocente, long idEdizione)
         {
-            this.Id = id;
+            InDBRepository dbr = new InDBRepository();
             this.Nome = nome;
             this.Ore = ore;
             this.Descrizione = descrizione;
-            this.Docente = docente;
-            this.IdDocente = docente.Id;
+            this.IdDocente = idDocente;
+            //this.Docente = dbr.getPersonabyId(idDocente);
             this.IdEdizione = idEdizione;
+            //this.Edizione = dbr.getEditionbyId(idEdizione);
         }
         #endregion
 

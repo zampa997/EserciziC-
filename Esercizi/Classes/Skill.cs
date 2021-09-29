@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Esercizi.Model.Data;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -27,10 +28,21 @@ namespace Esercizi.Classes
         public Skill(int id, string nome, string descrizione,
            long idCategoria)
         {
+            InDBRepository dbr = new InDBRepository();
             this.Id = id;
             this.Nome = nome;
             this.Descrizione = descrizione;
             this.IdCategoria = idCategoria;
+            this.Categoria = dbr.GetCategoriabyId(idCategoria);
+        }
+        public Skill(string nome, string descrizione,
+          long idCategoria)
+        {
+            InDBRepository dbr = new InDBRepository();
+            this.Nome = nome;
+            this.Descrizione = descrizione;
+            this.IdCategoria = idCategoria;
+            this.Categoria = dbr.GetCategoriabyId(idCategoria);
         }
         #endregion
     }

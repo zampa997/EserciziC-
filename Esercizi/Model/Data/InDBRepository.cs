@@ -10,7 +10,7 @@ namespace Esercizi.Model.Data
     public class InDBRepository : IRepository
     {
         #region Query
-            #region QueryAdd
+        #region QuerySelect
             const string CONNECTION_STRING = @"Server = localhost;             
                                             User=sa;             
                                             Password=1Secure*Password;             
@@ -42,22 +42,27 @@ namespace Esercizi.Model.Data
                                                 FROM dbo.edizioni";
         #endregion
         #region QueryInsert
-        const string INSERT_AULA = @"INSERT INTO dbo.aula (id, nome, capacita_massima, fisica, computerizzata, proiettore)
-                                         VALUES (@id, @nome, @capacita_massima, @fisica, @computerizzata, @proiettore);";
-            const string INSERT_AZIENDA = @"INSERT INTO dbo.azienda (id, nome, citta, indirizzo, cap, telefono, email, partita_iva)
-                                             VALUES (@id, @nome, @citta, @indirizzo, @cap, @telefono, @email, @partita_iva);";
-            const string INSERT_CATEGORIA = @"INSERT INTO dbo.categoria (id, descrizione, argomento)
-                                            VALUES (@id, @descrizione, @argomento);";
-            const string INSERT_FINANZIATORE = @"INSERT INTO dbo.finanziatore (id, descrizione)
-                                                VALUES (@id, @descrizione);";
-            const string INSERT_LIVELLO = @"INSERT INTO dbo.livello (id, descrizione, tipo)
-                                            VALUES (@id, @descrizione, @tipo);";
-            const string INSERT_CORSO = @"INSERT INTO dbo.corso (id, titolo, ammontare_ore, costo_di_riferimento, id_progetto, id_livello, id_categoria)
+        const string INSERT_AULA = @"INSERT INTO dbo.aula (nome, capacita_massima, fisica, computerizzata, proiettore)
+                                            OUPUT INSERTED.id  
+                                            VALUES (@nome, @capacita_massima, @fisica, @computerizzata, @proiettore);";
+            const string INSERT_AZIENDA = @"INSERT INTO dbo.azienda (nome, citta, indirizzo, cap, telefono, email, partita_iva)
+                                            OUPUT INSERTED.id  
+                                            VALUES (@nome, @citta, @indirizzo, @cap, @telefono, @email, @partita_iva);";
+            const string INSERT_CATEGORIA = @"INSERT INTO dbo.categoria (descrizione, argomento)
+                                            OUPUT INSERTED.id  
+                                            VALUES (@descrizione, @argomento);";
+            const string INSERT_FINANZIATORE = @"INSERT INTO dbo.finanziatore (descrizione)
+                                                OUPUT INSERTED.id  
+                                                VALUES (@descrizione);";
+            const string INSERT_LIVELLO = @"INSERT INTO dbo.livello (descrizione, tipo)
+                                            OUPUT INSERTED.id  
+                                            VALUES (@descrizione, @tipo);";
+            const string INSERT_CORSO = @"INSERT INTO dbo.corso (titolo, ammontare_ore, costo_di_riferimento, id_progetto, id_livello, id_categoria)
                                           OUPUT INSERTED.id  
-                                          VALUES (@id, @titolo, @ammontare_ore, @costo_di_riferimento, @id_progetto, @id_livello, @id_categoria);";
-            const string INSERT_EDIZIONE = @"INSERT INTO dbo.edizione (id, codice_edizione, data_inizio, data_fine, prezzo_finale, numero_studenti_massimo, id_presenza, id_aula, id_corso, id_finanziatore)
+                                          VALUES (@titolo, @ammontare_ore, @costo_di_riferimento, @id_progetto, @id_livello, @id_categoria);";
+            const string INSERT_EDIZIONE = @"INSERT INTO dbo.edizione (codice_edizione, data_inizio, data_fine, prezzo_finale, numero_studenti_massimo, id_presenza, id_aula, id_corso, id_finanziatore)
                                              OUPUT INSERTED.id 
-                                             VALUES (@id, @codice_edizione, @data_inizio, @data_fine, @prezzo_finale, @numero_studenti_massimo, @id_presenza, @id_aula, @id_corso, @id_finanziatore);";
+                                             VALUES (@codice_edizione, @data_inizio, @data_fine, @prezzo_finale, @numero_studenti_massimo, @id_presenza, @id_aula, @id_corso, @id_finanziatore);";
         #endregion
         #endregion
 
@@ -172,7 +177,7 @@ namespace Esercizi.Model.Data
                 {
                  
                     SqlCommand cmd = new SqlCommand(INSERT_EDIZIONE, conn);
-                    cmd.Parameters.AddWithValue("@id", edizione.Id);
+                    //cmd.Parameters.AddWithValue("@id", edizione.Id);
                     cmd.Parameters.AddWithValue("@codice_edizione", edizione.CodiceEdizione);
                     cmd.Parameters.AddWithValue("@data_inizio", edizione.Start);
                     cmd.Parameters.AddWithValue("@data_fine", edizione.End);
