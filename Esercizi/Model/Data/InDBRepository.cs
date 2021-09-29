@@ -119,7 +119,38 @@ namespace Esercizi.Model.Data
         }
         public IEnumerable<Corso> GetCourses()
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+                {
+                    Corso cr = null;
+                    SqlCommand cmd = new SqlCommand(SELECT_CORSO, conn);
+                    List<Corso> r = new List<Corso>();
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            int id = reader.GetInt32("id");
+                            string titolo = reader.GetString("nome");
+                            string descrizione = reader.GetString("descrizione");
+                            int ammontare_ore = reader.GetInt32("ammontare_ore");
+                            decimal costo_di_riferimento = reader.GetDecimal("costo_di_riferimento");
+                            int id_livello = reader.GetInt32("id_livello");
+                            int id_progetto = reader.GetInt32("id_progetto");
+                            int id_categoria = reader.GetInt32("id_categoria");
+                            cr = new Corso(id, titolo, ammontare_ore, (long)costo_di_riferimento, id_livello, id_progetto, id_categoria, descrizione);
+                            r.Add(cr);
+                        }
+                        return r;
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
         #endregion
         #region EdizioneCorsi
