@@ -8,7 +8,7 @@ using System.Text;
 namespace Esercizi.Classes
 {
     public class Lezione
-    {//checked but no checked
+    {//checked
         #region Properties
         public int Id { get; set; }
         public LocalDate Inizio { get; set; }

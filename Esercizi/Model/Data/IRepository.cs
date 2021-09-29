@@ -9,26 +9,29 @@ namespace Esercizi.Model.Data
     {
         #region Corsi
         IEnumerable<Corso> GetCourses();
-        void SetCourse(Corso c);
+        Corso SetCourse(Corso c);
         Corso GetCourseById(long id);
         bool CourseExists(Corso c);
         #endregion
         #region Edizioni Corso
         IEnumerable<EdizioneCorso> FindEditionsByCourses(long courseId);
-        void SetEdition(EdizioneCorso e);
+        EdizioneCorso SetEdition(EdizioneCorso e);
+        EdizioneCorso GetEditionbyId(long id);
         Report GenerateStatisticalReport(long idCorso);
         #endregion
         #region Like a Virgin
         public Livello GetLivellobyId(long idLivello);
-        public void SetLivello(Livello level);
+        public Livello SetLivello(Livello level);
         public Azienda GetAziendabyId(long idAzienda);
-        public void SetAzienda(Azienda aziend);
+        public Azienda SetAzienda(Azienda aziend);
         public Categoria GetCategoriabyId(long idCategoria);
-        public void SetCategoria(Categoria categoria);
+        public Categoria SetCategoria(Categoria categoria);
         public Aula GetAulabyId(long idAula);
-        public void SetAula(Aula aula);
+        public Aula SetAula(Aula aula);
         public Finanziatore GetFinanziatorebyId(long idFinanziatore);
-        public void SetFinanziatore(Finanziatore finanziatore);
+        public Finanziatore SetFinanziatore(Finanziatore finanziatore);
+        public Progetto GetProgettobyId(long idProgetto);
+        public Progetto SetProgetto(Progetto progetto);
         #endregion
 
     }

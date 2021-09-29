@@ -1,4 +1,6 @@
-﻿using NodaTime;
+﻿using Esercizi.Classes;
+using Esercizi.Model.Data;
+using NodaTime;
 using NodaTime.Text;
 using System;
 using System.Collections.Generic;
@@ -9,15 +11,23 @@ namespace Esercizi.Model
 {
     public class UserInterface
     {
-        //public CourseService CourseService { get; set; }
+        public Service Service { get; set; }
+        private InDBRepository dbr = new InDBRepository();
+
         const string DIVISORE = "==============================================================";
-        const string MAIN_MENU = "Operazioni disponibili: inserisci\na per vedere tutti i corsi\nc per aggiungere un corso\ne per cercare le edizioni di un corso\nb per inserire un edizione di un corso\nr per creare un report\nq per terminare il programma";
+        const string MAIN_MENU = @"Operazioni disponibili, inserisci:
+                                    a per vedere tutti i corsi
+                                    c per aggiungere un corso
+                                    e per cercare le edizioni di un corso
+                                    b per inserire un edizione di un corso
+                                    r per creare un report
+                                    q per terminare il programma";
         const string BASE_PROMPT = "=>";
 
-        //public UserInterface(CourseService service)
-        //{
-        //    CourseService = service;
-        //}
+        public UserInterface(Service service)
+        {
+            this.Service = service;
+        }
 
         public void Start()
         {
@@ -26,37 +36,37 @@ namespace Esercizi.Model
             //la mediana del prezzo delle edizioni, la moda dei prezzi delle edizioni, numero max studenti e numero min studenti
             //OUTPUT => n-edizioni | somma prezzi | media prezzi | mediana prezzi | moda prezzi | n-max studenti | n-min studenti           
             bool quit = false;
-            //do
-            //{
-            //    WriteLine(DIVISORE);
-            //    WriteLine(MAIN_MENU);
-            //    char c = ReadChar(BASE_PROMPT);
-            //    switch (c)
-            //    {
-            //        case 'a':
-            //            ShowCourses();
-            //            break;
-            //        case 'c':
-            //            //CreateCourse();
-            //            break;
-            //        case 'b':
-            //            //CreateCourseEdition();
-            //            break;
-            //        case 'r':
-            //            GenerateReport();
-            //            break;
-            //        case 'e':
-            //            ShowCourseEditionsByCourse();
-            //            break;
-            //        case 'q':
-            //            quit = true;
-            //            break;
-            //        default:
-            //            WriteLine("Comando non riconoscuto");
-            //            break;
-            //    }
-            //}
-            //while (!quit);          
+            do
+            {
+                WriteLine(DIVISORE);
+                WriteLine(MAIN_MENU);
+                char c = ReadChar(BASE_PROMPT);
+                switch (c)
+                {
+                    case 'a':
+                        ShowCourses();
+                        break;
+                    case 'c':
+                        CreateCourse();
+                        break;
+                    case 'b':
+                        CreateCourseEdition();
+                        break;
+                    //case 'r':
+                    //    GenerateReport();
+                    //    break;
+                    case 'e':
+                        ShowCourseEditionsByCourse();
+                        break;
+                    case 'q':
+                        quit = true;
+                        break;
+                    default:
+                        WriteLine("Comando non riconoscuto");
+                        break;
+                }
+            }
+            while (!quit);
         }
 
         //private void GenerateReport()
@@ -67,81 +77,89 @@ namespace Esercizi.Model
         //    WriteLine($"Numero edizioni: {r.NumEditions} \nSomma dei prezzi: {r.SumPrices} \nMedia dei prezzi: {r.AveragePrice} \nMediana dei prezzi: {r.MedianPrice} \nModa dei prezzi: {r.ModaPrice} \nNumero massimo studenti: {r.NumeroMaxStudents} \nNumero minimo studenti: {r.NumeroMinStudents}");
         //}
 
-        //private void CreateCourseEdition()
-        //{
-        //    long id = ReadLong("Inserire Id edizione corso =>");
-        //    long idCorso = ReadLong("Inserire Id del corso =>");
-        //    LocalDate start = ReadLocalDate("Inserire data di inizio corso (yyyy-mm-dd) =>");
-        //    LocalDate end = ReadLocalDate("Inserire data di fine corso (yyyy-mm-dd) =>");
-        //    int numStudents = (int)ReadLong("Inserire numero studenti =>");
-        //    decimal realPrice = ReadDecimal("Inserire prezzo finale edizione corso =>");
-        //   // var edition = new EdizioneCorso(id, null, start, end, numStudents, realPrice);
-        //    if (CourseService.CreateCourseEdition(edition, idCorso) == null)
-        //    {
-        //        WriteLine(DIVISORE);
-        //        WriteLine("Impossibile aggiungere Edizioni con lo stesso ID");
-        //    }
-        //    else
-        //    {
-        //        CourseService.CreateCourseEdition(edition, idCorso);
-        //        Console.Clear();
-        //        WriteLine("Edizione inserita con successo");
-        //    }          
-        //}
+        private EdizioneCorso CreateCourseEdition()
+        {
+            EdizioneCorso output;
+            long idCorso = 0;
+            long idAula = 0;
+            long idFinanziatore = 0;
+            do
+            {
+                idCorso = ReadLong("Inserire Id del corso =>");
+            } while (dbr.GetCourseById(idCorso) == null);
+            string code = ReadString("Inserire codice Edizione =>");
+            LocalDate start = ReadLocalDate("Inserire data di inizio corso (yyyy-mm-dd) =>");
+            LocalDate end = ReadLocalDate("Inserire data di fine corso (yyyy-mm-dd) =>");
+            int numStudents = (int)ReadLong("Inserire numero studenti =>");
+            decimal realPrice = ReadDecimal("Inserire prezzo finale edizione corso =>");
+            do
+            {
+                idAula = ReadLong("Inserire Id dell'aula =>");
+            } while (dbr.GetAulabyId(idAula) == null);
+            do
+            {
+                idFinanziatore = ReadLong("Inserire Id del finanziatore =>");
+            } while (dbr.GetFinanziatorebyId(idFinanziatore) == null);
+            // var edition = new EdizioneCorso(id, null, start, end, numStudents, realPrice);            
+            output=new EdizioneCorso(code, idCorso, start, end, numStudents, realPrice, idAula, idFinanziatore);
+            Service.CreateCourseEdition(output, idCorso);
+            return output;
+        }
 
-        //private void ShowCourseEditionsByCourse()
-        //{
-        //    long id = ReadLong("Inserire Id corso =>");
-        //    IEnumerable<EdizioneCorso> editions = CourseService.GetCourseEditions(id);
-        //    WriteLine(DIVISORE);
-        //    foreach (var c in editions)
-        //    {
-        //        WriteLine(c.ToString());
-        //    }
-        //}
+        private void ShowCourseEditionsByCourse()
+        {
+            long id = ReadLong("Inserire Id corso =>");
+            IEnumerable<EdizioneCorso> editions = Service.GetCourseEditionsbyCourse(id);
+            WriteLine(DIVISORE);
+            foreach (var c in editions)
+            {
+                WriteLine(c.ToString());
+            }
+        }
 
-        //private void CreateCourse()
-        //{
-        //    long id = ReadLong("Inserire ID =>");
-        //    string titolo = ReadString("Inserire Titolo =>");
-        //    string descrizione = ReadString("Inserire Descrizione =>");
-        //    //ExperienceLevel level;
-        //    bool ExpIsGood = false;
-        //    do
-        //    {
-        //        string livelloString = ReadString("Inserire Livello del corso: PRINCIPIANTE | MEDIO | ESPERTO | GURU =>");
-               
-        //        ExpIsGood = Enum.TryParse(livelloString, out level);
-        //        if (!ExpIsGood)
-        //        {
-        //            WriteLine("Inserisci un livello valido");
-        //        }
-        //    }
-        //    while (!ExpIsGood);
-        //    int durataCorso = (int)ReadLong("Inserire Durata del corso =>");
-        //    decimal prezzoCorso = ReadDecimal("Inserire Prezzo corso =>");
+        private Corso CreateCourse()
+        {
+            Corso c = null ;
+            long idLivello = 0;
+            string titolo = ReadString("Inserire Titolo =>");
+            string descrizione = ReadString("Inserire Descrizione =>");
+            do
+            {
+                idLivello = ReadLong(@"Inserire Livello del corso: 1.PRINCIPIANTE
+                                                                   2.MEDIO
+                                                                   3.ESPERTO
+                                                                   4.GURU =>");
+            } while (idLivello > 5 || idLivello < 1);
 
-        //    Corso c = new Corso(id, titolo, durataCorso, level, descrizione, prezzoCorso);
-        //    WriteLine(DIVISORE);
-        //    if (CourseService.CreateCourse(c) == null)
-        //    {
-        //        WriteLine("Impossibile aggiungere corsi con lo stesso ID");
-        //    }
-        //    else
-        //    {
-        //        WriteLine("Corso inserito con successo");
-        //    }
-        //}
+            long idProgetto=0;
+            long idCategoria;
+            do
+            {                
+                idProgetto = ReadLong("Inserire l'Id del progetto =>");
+            } while (dbr.GetProgettobyId(idProgetto) == null);
+            do
+            {
+                idCategoria = ReadLong("Inserire l'Id della Categoria =>");
+            } while (dbr.GetCategoriabyId(idCategoria) == null);
+            int durataCorso = (int)ReadLong("Inserire Durata del corso =>");
+            decimal prezzoCorso = ReadDecimal("Inserire Prezzo corso =>");
+            c = new Corso(titolo, durataCorso, prezzoCorso,
+                    idLivello, idProgetto, idCategoria, descrizione);
+            WriteLine(DIVISORE);
 
-        //private void ShowCourses()
-        //{
-        //    IEnumerable<Corso> courses = CourseService.GetAllCourses();
-        //    WriteLine(DIVISORE);
-        //    foreach(var c in courses)
-        //    {
-        //        WriteLine(c.ToString());
-        //    }
-        //}
+            return Service.CreateCourse(c);
+        
+        }
+
+        private void ShowCourses()
+        {
+            IEnumerable<Corso> courses = Service.GetAllCourses();
+            WriteLine(DIVISORE);
+            foreach (var c in courses)
+            {
+                WriteLine(c.ToString());
+            }
+        }
 
         private LocalDate ReadLocalDate(string prompt)
         {

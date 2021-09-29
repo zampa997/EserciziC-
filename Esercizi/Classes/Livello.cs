@@ -13,22 +13,22 @@ namespace Esercizi.Model
         #endregion
         #region Costructor
         public Livello() { }
-        public Livello(int id, string descrizione, string tipo)
+        public Livello(int id, string descrizione)
         {
             Id = id;
             Descrizione = descrizione;
-            switch (tipo.ToUpper())
+            switch (id)
             {
-                case "PRINCIPIANTE":
+                case 1:
                     Tipo = Livello.tipo.PRINCIPIANTE;
                     break;
-                case "MEDIO":
+                case 2:
                     Tipo = Livello.tipo.MEDIO;
                     break;
-                case "ESPERTO":
+                case 3:
                     Tipo = Livello.tipo.ESPERTO;
                     break;
-                case "GURU":
+                case 4:
                     Tipo = Livello.tipo.GURU;
                     break;
                 default:
@@ -44,21 +44,21 @@ namespace Esercizi.Model
             ESPERTO,
             GURU
         }
-        public Livello(string descrizione, string tipo)
+        public Livello(string descrizione)
         {
             Descrizione = descrizione;
-            switch (tipo.ToUpper())
+            switch (Id)
             {
-                case "PRINCIPIANTE":
+                case 1:
                     Tipo = Livello.tipo.PRINCIPIANTE;
                     break;
-                case "MEDIO":
+                case 2:
                     Tipo = Livello.tipo.MEDIO;
                     break;
-                case "ESPERTO":
+                case 3:
                     Tipo = Livello.tipo.ESPERTO;
                     break;
-                case "GURU":
+                case 4:
                     Tipo = Livello.tipo.GURU;
                     break;
                 default:

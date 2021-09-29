@@ -62,7 +62,7 @@ namespace Esercizi.Classes
             this.IdDocente = idDocente;
             //this.Docente = dbr.getPersonabyId(idDocente);
             this.IdEdizione = idEdizione;
-            //this.Edizione = dbr.getEditionbyId(idEdizione);
+            this.Edizione = dbr.GetEditionbyId(idEdizione);
         }
         public Modulo(string nome, decimal ore, string descrizione,
          long idDocente, long idEdizione)
@@ -74,7 +74,7 @@ namespace Esercizi.Classes
             this.IdDocente = idDocente;
             //this.Docente = dbr.getPersonabyId(idDocente);
             this.IdEdizione = idEdizione;
-            //this.Edizione = dbr.getEditionbyId(idEdizione);
+            this.Edizione = dbr.GetEditionbyId(idEdizione);
         }
         #endregion
 

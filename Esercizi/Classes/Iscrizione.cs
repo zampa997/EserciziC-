@@ -71,7 +71,7 @@ namespace Esercizi.Classes
             this.IdPersona = idPersona;
             //this.Persona = dbr.getPersonabyId(idPersona);
             this.IdEdizione = idEdizione;
-            //this.Edizione = dbr.getEditionbyId(idEdizione);
+            this.Edizione = dbr.GetEditionbyId(idEdizione);
         }
         public Iscrizione(LocalDate dataIscrizione, string valutazione, int voto, bool pagata,
           long idPersona, long idEdizione)
@@ -84,7 +84,7 @@ namespace Esercizi.Classes
             this.IdPersona = idPersona;
             //this.Persona = dbr.getPersonabyId(idPersona);
             this.IdEdizione = idEdizione;
-            //this.Edizione = dbr.getEditionbyId(idEdizione);
+            this.Edizione = dbr.GetEditionbyId(idEdizione);
         }
         #endregion
     }

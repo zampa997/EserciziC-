@@ -83,7 +83,7 @@ namespace Esercizi.Model
             this.IdLivello = idLivello;
             this.IdCategoria = idCategoria;
             InDBRepository dbr = new InDBRepository();
-            Progetto = dbr.GetProgettobyid(idProgetto);
+            Progetto = dbr.GetProgettobyId(idProgetto);
             Livello = dbr.GetLivellobyId(idLivello);
             Categoria = dbr.GetCategoriabyId(idCategoria);
             Descrizione = descrizione;
@@ -99,7 +99,7 @@ namespace Esercizi.Model
             this.IdLivello = idLivello;
             this.IdCategoria = idCategoria;
             InDBRepository dbr = new InDBRepository();
-            Progetto = dbr.GetProgettobyid(idProgetto);
+            Progetto = dbr.GetProgettobyId(idProgetto);
             Livello = dbr.GetLivellobyId(idLivello);
             Categoria = dbr.GetCategoriabyId(idCategoria);
             Descrizione = descrizione;
