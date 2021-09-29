@@ -12,10 +12,7 @@ namespace Esercizi.Model.Data
         
         #region Query
         #region QuerySelect
-        const string CONNECTION_STRING = @"Server = localhost;             
-                                            User=sa;             
-                                            Password=1Secure*Password;             
-                                            Database = scuola";
+        const string CONNECTION_STRING = "Server = localhost; User=sa; Password=1Secure*Password; Database = scuola";
             const string SELECT_AULA = @"Select id, nome, capacita_massima,fisica,computerizzata, proiettore
                                         From dbo.aula
                                         where @id=id";

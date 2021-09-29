@@ -33,6 +33,5 @@ namespace Esercizi.Model.Data
         public Progetto GetProgettobyId(long idProgetto);
         public Progetto SetProgetto(Progetto progetto);
         #endregion
-
     }
 }
